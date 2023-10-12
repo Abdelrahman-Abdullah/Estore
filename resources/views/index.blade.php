@@ -1,5 +1,5 @@
 <x-layout>
-    <x-main-header/>
+    <x-main-header :categories="$categories"/>
     <x-brands/>
     <x-service-features/>
     <x-slide-view/>
