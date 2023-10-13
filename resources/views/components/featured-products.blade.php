@@ -1,12 +1,10 @@
 <!-- Featured Products Start -->
 <x-products-grab title="Featured Product">
+    @foreach($featuredProducts as $featuredProduct)
         <!-- One Featured Product Start-->
-        <x-one-product name="Product Name" img="img/product-1.jpg" price="99" rate="5"/>
+        <x-one-product :name="$featuredProduct->title" :img="$featuredProduct->image" :price="$featuredProduct->price" :rate="$featuredProduct->reviews_avg_rate"/>
         <!-- One Featured Product End-->
-        <x-one-product name="Product Name" img="img/product-2.jpg" price="99" rate="5"/>
-        <x-one-product name="Product Name" img="img/product-3.jpg" price="99" rate="5"/>
-        <x-one-product name="Product Name" img="img/product-4.jpg" price="99" rate="5"/>
-        <x-one-product name="Product Name" img="img/product-5.jpg" price="99" rate="5"/>
-        <x-one-product name="Product Name" img="img/product-6.jpg" price="99" rate="5"/>
+    @endforeach
+
 </x-products-grab>
 <!-- Featured Products End -->

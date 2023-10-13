@@ -23,7 +23,8 @@ class CategoryController extends Controller
         return view('index' ,
             [
                 'categories' => $this->category->getAll(),
-                'latestProducts' => $this->product->Latest()->get(),
+                'latestProducts' => $this->product->latest(),
+                'featuredProducts' => $this->product->featured(),
             ]
         );
     }

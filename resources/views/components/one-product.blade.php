@@ -4,17 +4,16 @@
         <div class="product-title">
             <a href="#">{{$name}}</a>
             <div class="ratting">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
+                @if(isset($rate))
+                    @for($i = 0 ; $i < floor($rate); $i++)
+                        <i class="fa fa-star"></i>
+                    @endfor
+                @endif
             </div>
         </div>
         <div class="product-image">
             <a href="product-detail.html">
-                {{-- TODO::Change this to use the img prop--}}
-                <img src="{{$img}}" alt="Product Image">
+                <img src="{{asset($img)}}" alt="Product Image">
             </a>
             <div class="product-action">
                 <a href="#"><i class="fa fa-cart-plus"></i></a>

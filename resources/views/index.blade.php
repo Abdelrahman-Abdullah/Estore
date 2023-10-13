@@ -4,7 +4,7 @@
     <x-service-features/>
     <x-slide-view/>
     <x-call/>
-    <x-featured-products/>
+    <x-featured-products :featuredProducts="$featuredProducts"/>
     <x-newsletter/>
     <x-recent-products :latestProducts="$latestProducts"/>
     <x-review-cards/>
