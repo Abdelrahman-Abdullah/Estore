@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 
 class ProductService
 {
-    public function getLatest()
+    public function Latest()
     {
         return Product::latest()->take(5);
     }

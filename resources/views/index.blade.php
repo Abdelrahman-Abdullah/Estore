@@ -6,6 +6,6 @@
     <x-call/>
     <x-featured-products/>
     <x-newsletter/>
-    <x-recent-products/>
+    <x-recent-products :latestProducts="$latestProducts"/>
     <x-review-cards/>
 </x-layout>
