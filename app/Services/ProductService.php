@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
+    public function getAll()
+    {
+        return Product::withAvg('reviews', 'rate')
+            ->orderBy('reviews_avg_rate', 'desc')
+            ->paginate(9);
+    }
     public function latest()
     {
         return Product::latest()->take(5)->get();
@@ -21,5 +27,7 @@ class ProductService
                 return $product->reviews_avg_rate >= 4;
             })->take(5);
     }
+
+
 
 }
