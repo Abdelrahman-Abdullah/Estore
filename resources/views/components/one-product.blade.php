@@ -1,8 +1,8 @@
 @props(['name' , 'img' , 'price' , 'rate'])
-<div class="col-lg-3">
+<div {{$attributes->merge(['class' => "col-lg-4"])}}>
     <div class="product-item">
         <div class="product-title">
-            <a href="#">{{$name}}</a>
+            <a href="{{route('products.show' , $name)}}">{{$name}}</a>
             <div class="ratting">
                 @if(isset($rate))
                     @for($i = 0 ; $i < floor($rate); $i++)
@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="product-image">
-            <a href="product-detail.html">
+            <a href="{{route('products.show' , $name)}}">
                 <img src="{{asset($img)}}" alt="Product Image">
             </a>
             <div class="product-action">
