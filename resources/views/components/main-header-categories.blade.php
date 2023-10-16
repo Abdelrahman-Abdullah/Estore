@@ -1,4 +1,4 @@
-<div class="col-md-3">
+<div {{$attributes->merge(['class' => "col-md-3"])}}>
     <nav class="navbar bg-light">
         <ul class="navbar-nav">
             {{--Start Category List Item--}}
