@@ -22,7 +22,6 @@ class CategoryController extends Controller
     {
         return view('index' ,
             [
-                'categories' => $this->category->getAll(),
                 'latestProducts' => $this->product->latest(),
                 'featuredProducts' => $this->product->featured(),
             ]
