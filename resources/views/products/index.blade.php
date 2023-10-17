@@ -13,7 +13,7 @@
                     </div>
                     <!-- Pagination Start -->
                     <div class="col-lg-8">
-                        {{$products->withQueryString()->links('pagination::bootstrap-5')}}
+                        {{$products->links('pagination::bootstrap-5')}}
                     </div>
                     <!-- Pagination Start -->
                 </div>

@@ -3,18 +3,24 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="product-search">
-                    <input type="email" value="Search">
-                    <button><i class="fa fa-search"></i></button>
+                    <form action="/products" method="get">
+                        {{-- To Merege Search With Prices During Filter --}}
+                        @if(request()->has('min_price', 'max_price'))
+                            <input type="hidden" name="min_price" value="{{request('min_price')}}">
+                            <input type="hidden" name="max_price" value="{{request('max_price')}}">
+                        @endif
+                        <input type="text" name="search" placeholder="Search By Name" value="{{ request('search') }}">
+                        <button><i class="fa fa-search"></i></button>
+                    </form>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="product-short">
                     <div class="dropdown">
-                        <div class="dropdown-toggle" data-toggle="dropdown">Product short by</div>
+                        <div class="dropdown-toggle" data-toggle="dropdown">Product short by {{ucfirst(request('sort'))}}</div>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item">Newest</a>
-                            <a href="#" class="dropdown-item">Popular</a>
-                            <a href="#" class="dropdown-item">Most sale</a>
+                            <a href="/products?sort=newest" class="dropdown-item">Newest</a>
+                            <a href="/products?sort=popular" class="dropdown-item">Popular</a>
                         </div>
                     </div>
                 </div>
@@ -24,16 +30,20 @@
                     <div class="dropdown">
                         <div class="dropdown-toggle" data-toggle="dropdown">Product price range</div>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item">$0 to $50</a>
-                            <a href="#" class="dropdown-item">$51 to $100</a>
-                            <a href="#" class="dropdown-item">$101 to $150</a>
-                            <a href="#" class="dropdown-item">$151 to $200</a>
-                            <a href="#" class="dropdown-item">$201 to $250</a>
-                            <a href="#" class="dropdown-item">$251 to $300</a>
-                            <a href="#" class="dropdown-item">$301 to $350</a>
-                            <a href="#" class="dropdown-item">$351 to $400</a>
-                            <a href="#" class="dropdown-item">$401 to $450</a>
-                            <a href="#" class="dropdown-item">$451 to $500</a>
+                            <form action="/products" method="get" class="p-4">
+                                {{-- To Merege Prices With Search During Filter --}}
+                                @if(request('search'))
+                                    <input type="hidden" name="search" value="{{request('search')}}">
+                                @endif
+                                <label for="min_price">Min Price:</label>
+                                <input type="number" id="min_price" name="min_price" value="{{ request('min_price') }}" min="0">
+                                <br><br>
+                                <label for="max_price">Max Price:</label>
+                                <input type="number" id="max_price" name="max_price" value="{{ request('max_price') }}" min="0">
+                                <br><br>
+                                <button type="submit" class="px-4 py-1 btn">Search</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
