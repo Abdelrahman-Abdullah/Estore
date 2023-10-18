@@ -12,13 +12,8 @@ class ProductService
     {
         return Product::withAvg('reviews', 'rate')
             ->when(request('search'), fn($query) => $query->whereNameLike(request('search')))
-            ->when(request()->query('sort') == 'newest', fn($query) => $query->whereNewest())
-            ->when(request()->query('sort') == 'popular', fn($query) => $query->wherePopular())
-            ->when(request()->has('min_price','max_price'), function ($query) {
-                $minPrice = request('min_price');
-                $maxPrice = request('max_price');
-                return $query->wherePriceBetween($minPrice, $maxPrice);
-            })
+            ->when(request()->query('sort') , fn($query) => $this->applySort($query))
+            ->when(request()->has('min_price','max_price'), fn($query) => $this->applyPriceRange($query))
             ->paginate(9)
             ->withQueryString();
     }
@@ -37,5 +32,21 @@ class ProductService
             })->take(5);
     }
 
+    private function applySort($query)
+    {
+        $sort = request()->query('sort');
+        return  match ($sort) {
+            'newest' => $query->whereNewest(),
+            'popular' => $query->wherePopular(),
+            default => $query
+        };
+    }
+
+    private function applyPriceRange($query)
+    {
+        $minPrice = request('min_price');
+        $maxPrice = request('max_price');
+        return $query->wherePriceBetween($minPrice, $maxPrice);
+    }
 
 }
