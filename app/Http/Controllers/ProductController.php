@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Services\ProductService;
-use http\Encoding\Stream\Debrotli;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     protected ProductService $product;
+
     public function __construct(ProductService $productService)
     {
         $this->product = $productService;
@@ -18,6 +19,15 @@ class ProductController extends Controller
     {
         return view('products.index', [
             'products' => $this->product->getAll()
+        ]);
+    }
+
+    public function show($title)
+    {
+        $product = $this->product->getOne($title);
+        return view('products.show', [
+            'product' => $product,
+            'latestProducts' => $this->product->latest()
         ]);
     }
 }

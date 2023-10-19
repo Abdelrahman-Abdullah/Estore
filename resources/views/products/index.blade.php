@@ -1,4 +1,3 @@
-{{--@dd($products)--}}
 <x-layout>
     <div class="product-view">
         <div class="container-fluid">
@@ -18,23 +17,7 @@
                     <!-- Pagination Start -->
                 </div>
                 <!-- Side Bar Start -->
-                <div class="col-lg-4 sidebar">
-                    <div class="sidebar-widget category">
-                        <h2 class="title">Category</h2>
-
-                        <x-main-header-categories class="col-md-6" :categories="$categories"/>
-                    </div>
-
-                    <div class="sidebar-widget widget-slider">
-                        <div class="sidebar-slider normal-slider">
-                            @foreach($products as $product)
-                                    <x-one-product :name="$product->title" :img="$product->image" :price="$product->price" />
-                                    @break($loop->iteration == 3)
-                            @endforeach
-                        </div>
-                    </div>
-
-                </div>
+                <x-products-page-side-bar :categories="$categories" :products="$products"/>
                 <!-- Side Bar End -->
             </div>
         </div>
