@@ -1,4 +1,7 @@
-@props(['name'])
-@error($name)
-    <div class="alert alert-danger">{{$message}}</div>
-@enderror
+<p class="alert alert-danger mt-4"
+     x-data="{show:true}"
+     x-init="setTimeout(() => show = false, 3000)"
+     x-show="show"
+>
+    {{session('message')}}
+</p>
