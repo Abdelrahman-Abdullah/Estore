@@ -19,4 +19,9 @@ class UserAuthService
         }
         return true;
     }
+
+    public function logout(): void
+    {
+        auth()->logout();
+    }
 }

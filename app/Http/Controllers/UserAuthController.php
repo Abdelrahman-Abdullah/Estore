@@ -26,5 +26,11 @@ class UserAuthController extends Controller
         $request->session()->regenerate();
         return redirect()->route('products.index')->with('message', 'You have successfully logged in.');
     }
+    public function destroy(Request $request)
+    {
+        $this->userAuthService->logout();
+        $request->session()->invalidate();
+        return redirect()->route('products.index')->with('message', 'You have successfully logged out.');
+    }
 
 }
