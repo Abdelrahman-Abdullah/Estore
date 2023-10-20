@@ -24,20 +24,20 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <input type="text"  name="name" class="form-control" placeholder="Your Name"/>
-                                    <x-error-message name="name"/>
+                                    <x-error-input name="name"/>
                                 </div>
                                 <div class="col-md-6">
                                     <input type="email" name="email" class="form-control" placeholder="Your Email"/>
-                                    <x-error-message name="email"/>
+                                    <x-error-input name="email"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <input type="text" name="subject" class="form-control" placeholder="Subject"/>
-                                <x-error-message name="subject"/>
+                                <x-error-input name="subject"/>
                             </div>
                             <div class="form-group">
                                 <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
-                                <x-error-message name="message"/>
+                                <x-error-input name="message"/>
                             </div>
                             <div>
                                 <button class="btn" type="submit">Send Message</button>

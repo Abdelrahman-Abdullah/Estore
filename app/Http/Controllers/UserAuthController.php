@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\UserRegisterRequest;
+use App\Http\Requests\User\UserLoginRequest;
 use App\Services\UserAuthService;
 use Illuminate\Http\Request;
 
@@ -12,15 +12,19 @@ class UserAuthController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
     public function create()
     {
-        return view('users.register');
+        return view('users.login');
     }
 
-    public function store(UserRegisterRequest $request)
+    public function store(UserLoginRequest $request)
     {
-        $this->userAuthService->register($request->validated());
-        return redirect()->route('user.register')->with('message', 'You have successfully registered.');
+        $status = $this->userAuthService->login($request->validated());
+        if (!$status) {
+            return back()->with('message', 'The provided credentials do not match our records.',);
+        }
+        $request->session()->regenerate();
+        return redirect()->route('products.index')->with('message', 'You have successfully logged in.');
     }
+
 }

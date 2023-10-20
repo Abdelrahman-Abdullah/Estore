@@ -10,4 +10,13 @@ class UserAuthService
     {
         User::create($data);
     }
+
+
+    public function login(array $data): bool
+    {
+        if (!auth()->attempt($data)) {
+            return false;
+        }
+        return true;
+    }
 }
