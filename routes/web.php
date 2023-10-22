@@ -34,9 +34,8 @@ Route::prefix('users')
             ->group(function () {
                 Route::get('login', 'create')->name('login');
                 Route::post('login', 'store')->name('login');
-                Route::get('logout', 'destroy')->name('logout');
+                Route::post('logout', 'destroy')->middleware('auth')->name('logout');
             });
-
     });
 
 Route::controller(ContactController::class)
