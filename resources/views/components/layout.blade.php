@@ -53,27 +53,33 @@
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav mr-auto">
-                    <a href="/" class="nav-item nav-link active">Home</a>
-                    <a href="{{route('products.index')}}" class="nav-item nav-link">Products</a>
-                    <a href="cart.html" class="nav-item nav-link">Cart</a>
-                    <a href="checkout.html" class="nav-item nav-link">Checkout</a>
-                    <a href="my-account.html" class="nav-item nav-link">My Account</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More Pages</a>
-                        <div class="dropdown-menu">
-                            <a href="wishlist.html" class="dropdown-item">Wishlist</a>
-                            <a href="{{route('user.register')}}" class="dropdown-item">Login & Register</a>
-                            <a href="{{route('contact.index')}}" class="dropdown-item">Contact Us</a>
-                        </div>
-                    </div>
+                    <a href="/" class="nav-item nav-link {{request()->is('/') ? 'active' :''}}">Home</a>
+                    <a href="{{route('products.index')}}" class="nav-item nav-link {{request()->is('products') ? 'active' :''}}">Products</a>
+                    @auth
+                        <a href="my-account.html" class="nav-item nav-link">My Account</a>
+                        <a href="wishlist.html" class="nav-item nav-link">Wishlist</a>
+                    @endauth
+                    <a href="{{route('contact.index')}}" class="nav-item nav-link {{request()->is('contact') ? 'active' :''}}">Contact Us</a>
                 </div>
                 <div class="navbar-nav ml-auto">
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">Login</a>
-                            <a href="#" class="dropdown-item">Register</a>
-                        </div>
+                        @auth
+                            <a href="#" class="nav-link dropdown-toggle"
+                               data-toggle="dropdown">{{auth()->user()->first_name}}
+                            </a>
+                            <div class="dropdown-menu">
+                                <form action="{{route('user.logout')}}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </div>
+                        @else
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
+                            <div class="dropdown-menu">
+                                <a href="{{route('user.login')}}" class="dropdown-item">Login</a>
+                                <a href="{{route('user.register')}}" class="dropdown-item">Register</a>
+                            </div>
+                        @endauth
                     </div>
                 </div>
             </div>
@@ -83,7 +89,7 @@
 <!-- Nav Bar End -->
 
 <!-- Bottom Bar Start  Search -->
-<x-search />
+<x-search/>
 <!-- Bottom Bar End    Search-->
 
 {{$slot}}

@@ -10,7 +10,7 @@ class UserAuthController extends Controller
 {
     public function __construct(protected UserAuthService $userAuthService)
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('destroy');
     }
     public function create()
     {
@@ -30,7 +30,7 @@ class UserAuthController extends Controller
     {
         $this->userAuthService->logout();
         $request->session()->invalidate();
-        return redirect()->route('products.index')->with('message', 'You have successfully logged out.');
+        return redirect()->route('/')->with('message', 'You have successfully logged out.');
     }
 
 }
