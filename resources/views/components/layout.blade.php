@@ -59,7 +59,7 @@
                        class="nav-item nav-link {{request()->is('products') ? 'active' :''}}">Products</a>
                     @auth
                         <a href="my-account.html" class="nav-item nav-link">My Account</a>
-                        <a href="wishlist.html" class="nav-item nav-link">Wishlist</a>
+                        <a href="{{route('wishlist.index')}}" class="nav-item nav-link">Wishlist</a>
                     @endauth
                     <a href="{{route('contact.index')}}"
                        class="nav-item nav-link {{request()->is('contact') ? 'active' :''}}">Contact Us</a>

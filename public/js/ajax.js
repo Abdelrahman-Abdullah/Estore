@@ -1,5 +1,6 @@
 let count = 0;
-function updateWishlist(productName, add) {
+
+function updateWishlist(productName, add, buttonElement) {
     let CSRF = $('meta[name="csrf-token"]').attr('content');
 
     $.ajax({
@@ -12,13 +13,14 @@ function updateWishlist(productName, add) {
             'X-CSRF-TOKEN': CSRF
         },
         success: function (response) {
-            if (add) {
-                count += 1;
-            } else {
-                count -= 1;
-            }
+            count = Math.max(count + (add ? 1 : -1), 0);
+
             inWishlist = add;
             $('#wishlistCount').text("(" + count + ")");
+
+            // Use buttonElement to find the closest <tr> and remove it
+            buttonElement.closest('tr').remove();
+
             console.log(response);
         },
         error: function (error) {
@@ -33,13 +35,11 @@ $('.wishlistBtn').click(function () {
 
     if (inWishlist) {
         // If it's in the wishlist, remove it
-        updateWishlist(productName, false);
+        updateWishlist(productName, false, $(this));
         $(this).data('in-wishlist', false); // Update the data attribute
-
     } else {
         // If it's not in the wishlist, add it
-        updateWishlist(productName, true);
+        updateWishlist(productName, true, $(this));
         $(this).data('in-wishlist', true); // Update the data attribute
-
     }
 });
