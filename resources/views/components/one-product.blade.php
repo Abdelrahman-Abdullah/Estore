@@ -17,8 +17,9 @@
             </a>
             <div class="product-action">
                 <a href="#"><i class="fa fa-cart-plus"></i></a>
-                <a href="#"><i class="fa fa-heart"></i></a>
-                <a href="#"><i class="fa fa-search"></i></a>
+                    <button type="submit" class="btn btn-link wishlistBtn" data-product-name="{{$name}}" data-in-wishlist="false" >
+                        <i class="fa fa-heart" id="heart"></i>
+                    </button>
             </div>
         </div>
         <div class="product-price">

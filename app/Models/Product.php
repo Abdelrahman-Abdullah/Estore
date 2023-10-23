@@ -30,4 +30,9 @@ class Product extends Model
     {
         return new ProductBuilder($query);
     }
+
+    public function wishlists()
+    {
+        return $this->belongsToMany(Wishlist::class);
+    }
 }

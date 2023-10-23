@@ -5,6 +5,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserRegisterController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,7 @@ Route::get('/', [CategoryController::class, 'index']);
 Route::get('products', [ProductController::class, 'index'])->name('products.index');
 Route::get('products/{title}', [ProductController::class, 'show'])->name('products.show');
 
+#region User Routes
 Route::prefix('users')
     ->as('user.')
     ->group(function () {
@@ -36,6 +38,15 @@ Route::prefix('users')
                 Route::post('login', 'store')->name('login');
                 Route::post('logout', 'destroy')->middleware('auth')->name('logout');
             });
+    });
+#endregion
+Route::controller(WishlistController::class)
+    ->prefix('wishlist')
+    ->as('wishlist.')
+    ->group(function () {
+        Route::get('', 'index')->name('index');
+        Route::post('/add', 'store')->name('store');
+        Route::post('/remove', 'destroy')->name('destroy');
     });
 
 Route::controller(ContactController::class)
