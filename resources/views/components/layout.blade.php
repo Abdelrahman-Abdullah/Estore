@@ -6,6 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="eCommerce HTML Template Free Download" name="keywords">
     <meta content="eCommerce HTML Template Free Download" name="description">
+    <meta class="hidden" content="{{csrf_token()}}" name="csrf-token">
 
     <!-- Favicon -->
     <link href="{{asset('img/favicon.ico')}}" rel="icon">
@@ -54,12 +55,14 @@
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav mr-auto">
                     <a href="/" class="nav-item nav-link {{request()->is('/') ? 'active' :''}}">Home</a>
-                    <a href="{{route('products.index')}}" class="nav-item nav-link {{request()->is('products') ? 'active' :''}}">Products</a>
+                    <a href="{{route('products.index')}}"
+                       class="nav-item nav-link {{request()->is('products') ? 'active' :''}}">Products</a>
                     @auth
                         <a href="my-account.html" class="nav-item nav-link">My Account</a>
                         <a href="wishlist.html" class="nav-item nav-link">Wishlist</a>
                     @endauth
-                    <a href="{{route('contact.index')}}" class="nav-item nav-link {{request()->is('contact') ? 'active' :''}}">Contact Us</a>
+                    <a href="{{route('contact.index')}}"
+                       class="nav-item nav-link {{request()->is('contact') ? 'active' :''}}">Contact Us</a>
                 </div>
                 <div class="navbar-nav ml-auto">
                     <div class="nav-item dropdown">
@@ -195,5 +198,6 @@
 
 <!-- Template Javascript -->
 <script src="{{asset('js/main.js')}}"></script>
+<script src="{{asset('js/ajax.js')}}"></script>
 </body>
 </html>

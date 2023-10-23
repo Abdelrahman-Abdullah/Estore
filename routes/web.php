@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', [CategoryController::class, 'index']);
 Route::get('products', [ProductController::class, 'index'])->name('products.index');
 Route::get('products/{title}', [ProductController::class, 'show'])->name('products.show');
