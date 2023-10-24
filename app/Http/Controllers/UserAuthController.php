@@ -30,7 +30,7 @@ class UserAuthController extends Controller
     {
         $this->userAuthService->logout();
         $request->session()->invalidate();
-        return redirect()->route('/')->with('message', 'You have successfully logged out.');
+        return redirect()->route('index')->with('message', 'You have successfully logged out.');
     }
 
 }

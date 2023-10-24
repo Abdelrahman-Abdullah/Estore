@@ -1,8 +1,7 @@
-let count = 0;
+let count = parseInt($('#wishlistCount').text());
 
 function updateWishlist(productName, add, buttonElement) {
     let CSRF = $('meta[name="csrf-token"]').attr('content');
-
     $.ajax({
         type: 'POST',
         url: add ? '/wishlist/add' : '/wishlist/remove',
@@ -16,7 +15,7 @@ function updateWishlist(productName, add, buttonElement) {
             count = Math.max(count + (add ? 1 : -1), 0);
 
             inWishlist = add;
-            $('#wishlistCount').text("(" + count + ")");
+            $('#wishlistCount').text(count);
 
             // Use buttonElement to find the closest <tr> and remove it
             buttonElement.closest('tr').remove();

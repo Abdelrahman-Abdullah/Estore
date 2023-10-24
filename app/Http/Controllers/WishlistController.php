@@ -10,7 +10,6 @@ class WishlistController extends Controller
 {
     public function __construct(protected WishlistService $wishlist)
     {
-        $this->middleware('auth');
     }
 
     public function index()

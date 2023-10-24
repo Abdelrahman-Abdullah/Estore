@@ -24,5 +24,9 @@ class AppServiceProvider extends ServiceProvider
         View::composer(['index', 'products.index', 'products.show'], function ($view) {
             $view->with('categories', (new CategoryService())->getAll() );
         });
+
+        View::composer('*', function ($view) {
+            $view->with('userWishlistProductsCount', auth()->user()?->wishlist->products->count());
+        });
     }
 }
