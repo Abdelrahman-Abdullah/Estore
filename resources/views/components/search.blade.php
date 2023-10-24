@@ -19,9 +19,15 @@
             <div class="col-md-3">
                 @auth
                     <div class="user">
-                        <a href="wishlist.html" class="btn wishlist">
+                        <a href="{{route('wishlist.index')}}" class="btn wishlist">
                             <i class="fa fa-heart"></i>
-                            <span id="wishlistCount">(0)</span>
+                            <span>
+                                (
+                                    <span id="wishlistCount">
+                                        {{$userWishlistProductsCount}}
+                                    </span>
+                                )
+                            </span>
                         </a>
                         <a href="cart.html" class="btn cart">
                             <i class="fa fa-shopping-cart"></i>

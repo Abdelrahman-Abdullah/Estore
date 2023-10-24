@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [CategoryController::class, 'index']);
+Route::get('/', [CategoryController::class, 'index'])->name('index');
 Route::get('products', [ProductController::class, 'index'])->name('products.index');
 Route::get('products/{title}', [ProductController::class, 'show'])->name('products.show');
 
@@ -43,6 +43,7 @@ Route::prefix('users')
 Route::controller(WishlistController::class)
     ->prefix('wishlist')
     ->as('wishlist.')
+    ->middleware('auth')
     ->group(function () {
         Route::get('', 'index')->name('index');
         Route::post('/add', 'store')->name('store');
