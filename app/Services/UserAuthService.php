@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserAuthService
 {
@@ -20,9 +21,17 @@ class UserAuthService
         return true;
     }
 
-    public function update(array $data): void
+    public function update(array $data): bool
     {
-         auth()->user()->update($data);
+        if (isset($data['new_password']) && $this->checkOldPassword($data['current_password'])) {
+            return auth()->user()->update(['password' => Hash::make($data['new_password'])]);
+        }
+        return auth()->user()->update($data);
+    }
+
+    public function checkOldPassword(string $password): bool
+    {
+        return Hash::check($password, auth()->user()->password);
     }
 
     public function logout(): void

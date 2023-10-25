@@ -126,20 +126,27 @@
                             </form>
 
                             <h4>Password change</h4>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input class="form-control" type="password" placeholder="Current Password">
+                            <form action="{{route('user.updateProfile')}}" method="POSt">
+                                @csrf
+                                @method('PUT')
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input class="form-control" type="password" placeholder="Current Password"
+                                               name="current_password">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input class="form-control" type="password" placeholder="New Password"
+                                               name="new_password">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input class="form-control" type="password" placeholder="Confirm Password"
+                                               name="new_password_confirmation">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn">Save Changes</button>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" placeholder="New Password">
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" placeholder="Confirm Password">
-                                </div>
-                                <div class="col-md-12">
-                                    <button class="btn">Save Changes</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
