@@ -10,7 +10,7 @@ class UserAuthController extends Controller
 {
     public function __construct(protected UserAuthService $userAuthService)
     {
-        $this->middleware('guest')->except('destroy');
+        $this->middleware('auth')->except('create', 'store');
     }
     public function create()
     {
@@ -25,6 +25,10 @@ class UserAuthController extends Controller
         }
         $request->session()->regenerate();
         return redirect()->route('products.index')->with('message', 'You have successfully logged in.');
+    }
+    public function show()
+    {
+        return view('users.profile');
     }
     public function destroy(Request $request)
     {

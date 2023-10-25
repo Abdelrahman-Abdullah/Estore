@@ -36,7 +36,8 @@ Route::prefix('users')
             ->group(function () {
                 Route::get('login', 'create')->name('login');
                 Route::post('login', 'store')->name('login');
-                Route::post('logout', 'destroy')->middleware('auth')->name('logout');
+                Route::get('profile','show')->name('profile');
+                Route::post('logout', 'destroy')->name('logout');
             });
     });
 #endregion
