@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserProfile;
 use App\Http\Requests\User\UserLoginRequest;
 use App\Services\UserAuthService;
 use Illuminate\Http\Request;
@@ -29,6 +30,11 @@ class UserAuthController extends Controller
     public function show()
     {
         return view('users.profile');
+    }
+    public function update(UpdateUserProfile $request)
+    {
+        $this->userAuthService->update($request->validated());
+        return back()->with('message', 'You have successfully updated your profile.');
     }
     public function destroy(Request $request)
     {

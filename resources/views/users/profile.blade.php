@@ -14,7 +14,9 @@
                                 class="fa fa-user"></i>Account Details</a>
                         <form action="{{route('user.logout')}}" method="POST">
                             @csrf
-                            <button type="submit" class="nav-link btn border border-1 w-100 text-end"><i class="fa fa-sign-out-alt"></i>Logout</button>
+                            <button type="submit" class="nav-link btn border border-1 w-100 text-end"><i
+                                    class="fa fa-sign-out-alt"></i>Logout
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -91,28 +93,38 @@
                         </div>
                         <div class="tab-pane fade" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
                             <h4>Account Details</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" placeholder="First Name"
-                                           value="{{auth()->user()->first_name}}">
+                            <form action="{{route('user.updateProfile')}}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input class="form-control" type="text" placeholder="First Name"
+                                               name="first_name"
+                                               value="{{auth()->user()->first_name}}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input class="form-control" type="text" placeholder="Last Name"
+                                               name="last_name"
+                                               value="{{auth()->user()->last_name}}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input class="form-control" type="text" placeholder="Mobile"
+                                               name="mobile"
+                                               value="{{auth()->user()->mobile}}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input class="form-control" type="text" placeholder="Email"
+                                               name="email"
+                                               disabled
+                                               value="{{auth()->user()->email}}">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn">Update Account</button>
+                                        <br><br>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" placeholder="Last Name"
-                                           value="{{auth()->user()->last_name}}">
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" placeholder="Mobile"
-                                           value="{{auth()->user()->mobile}}">
-                                </div>
-                                <div class="col-md-6">
-                                    <input class="form-control" type="text" placeholder="Email"
-                                           value="{{auth()->user()->email}}">
-                                </div>
-                                <div class="col-md-12">
-                                    <button class="btn">Update Account</button>
-                                    <br><br>
-                                </div>
-                            </div>
+                            </form>
+
                             <h4>Password change</h4>
                             <div class="row">
                                 <div class="col-md-12">

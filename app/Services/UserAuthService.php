@@ -20,6 +20,11 @@ class UserAuthService
         return true;
     }
 
+    public function update(array $data): void
+    {
+         auth()->user()->update($data);
+    }
+
     public function logout(): void
     {
         auth()->logout();

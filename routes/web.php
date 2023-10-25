@@ -37,6 +37,8 @@ Route::prefix('users')
                 Route::get('login', 'create')->name('login');
                 Route::post('login', 'store')->name('login');
                 Route::get('profile','show')->name('profile');
+                Route::patch('profile','update')->name('updateProfile');
+                Route::put('profile','update')->name('updateProfile');
                 Route::post('logout', 'destroy')->name('logout');
             });
     });
