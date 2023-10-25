@@ -21,6 +21,9 @@
                     </div>
                 </div>
                 <div class="col-md-9">
+                   @if(session('message'))
+                       <x-success-message />
+                   @endif
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="dashboard-tab" role="tabpanel"
                              aria-labelledby="dashboard-nav">
