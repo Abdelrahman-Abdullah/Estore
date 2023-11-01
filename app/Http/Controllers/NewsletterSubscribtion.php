@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Notifications\NewsletterSubscription;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class NewsletterSubscribtion extends Controller
 {
@@ -15,7 +16,8 @@ class NewsletterSubscribtion extends Controller
         $request->validate([
             'email' => 'required|email',
         ]);
-        (new NewsletterSubscription())->toMail($request->validated());
+        Notification::route('mail', $request->email)
+            ->notify(new NewsletterSubscription());
         return redirect()->back()->with('success', 'Thank you for subscribing to our newsletter.');
     }
 }

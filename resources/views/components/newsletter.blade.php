@@ -1,6 +1,7 @@
 <x-action-container title="Subscribe Our Newsletter" class="newsletter">
-    <div class="form">
-        <input type="email" value="Your email here">
-        <button>Submit</button>
-    </div>
+    <form class="form" action="{{route('subscribe')}}" method="POST">
+        @csrf
+        <input type="email" name="email" placeholder="Your email here">
+        <button type="submit">Submit</button>
+    </form>
 </x-action-container>

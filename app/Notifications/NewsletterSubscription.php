@@ -16,7 +16,6 @@ class NewsletterSubscription extends Notification
      */
     public function __construct()
     {
-        //
     }
 
     /**
