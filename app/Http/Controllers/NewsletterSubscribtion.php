@@ -18,6 +18,6 @@ class NewsletterSubscribtion extends Controller
         ]);
         Notification::route('mail', $request->email)
             ->notify(new NewsletterSubscription());
-        return redirect()->back()->with('success', 'Thank you for subscribing to our newsletter.');
+        return back()->with('notify', 'Thank you for subscribing to our newsletter.');
     }
 }
