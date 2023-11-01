@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\NewsletterSubscribtion;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserRegisterController;
@@ -20,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [CategoryController::class, 'index'])->name('index');
+Route::post('subscribe', [NewsletterSubscribtion::class])->name('subscribe');
 Route::get('products', [ProductController::class, 'index'])->name('products.index');
 Route::get('products/{title}', [ProductController::class, 'show'])->name('products.show');
 
