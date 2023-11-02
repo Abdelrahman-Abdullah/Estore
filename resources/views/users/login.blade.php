@@ -28,6 +28,9 @@
                         @if(session('message'))
                             <x-error-message />
                         @endif
+                        @if(session('success'))
+                            <x-success-message />
+                        @endif
                     </div>
                 </form>
             </div>
