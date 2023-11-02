@@ -6,18 +6,17 @@ class WishlistService
 {
     public function allProductsWithin()
     {
-        return auth()->user()->wishlist?->products ?? collect();
+        $user = auth()->user();
+        return $user->wishlist()->firstOr(function () use ($user) {
+            return $user->wishlist()->create(['user_id' => $user->id]);
+        })->products;
+        // firstOr() method will return the first element in the wishlist or create a new wishlist for the user if it doesn't exist.
     }
 
     public function addToWishlist($product)
     {
-        $authenticatable = auth()->user();
-        if (!$authenticatable->wishlist) {
-            $authenticatable->wishlist()->create([
-                'user_id' => $authenticatable->id,
-            ]);
-        }
-        $authenticatable->wishlist->products()->attach($product);
+        $user = auth()->user();
+        $user->wishlist->products()->attach($product);
         return true;
     }
 
