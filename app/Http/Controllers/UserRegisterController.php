@@ -22,7 +22,7 @@ class UserRegisterController extends Controller
     public function store(UserRegisterRequest $request)
     {
         $this->userAuthService->register($request->validated());
-        return redirect()->route('user.register')->with('message', 'You have successfully registered, Login Now!.');
+        return redirect()->route('user.login')->with('success', 'You have successfully registered, Login Now!.');
     }
 
 

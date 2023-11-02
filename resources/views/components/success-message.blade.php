@@ -3,5 +3,5 @@
      x-init="setTimeout(() => show = false, 2000)"
      x-show="show"
 >
-    {{session('notify')}}
+    {{session('notify') ?? session('success')}}
 </div>
