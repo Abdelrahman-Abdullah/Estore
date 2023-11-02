@@ -33,26 +33,8 @@
                                         <button class="btn-plus"><i class="fa fa-plus"></i></button>
                                     </div>
                                 </div>
-                                <div class="p-size">
-                                    <h4>Size:</h4>
-                                    <div class="btn-group btn-group-sm">
-                                        <button type="button" class="btn">S</button>
-                                        <button type="button" class="btn">M</button>
-                                        <button type="button" class="btn">L</button>
-                                        <button type="button" class="btn">XL</button>
-                                    </div>
-                                </div>
-                                <div class="p-color">
-                                    <h4>Color:</h4>
-                                    <div class="btn-group btn-group-sm">
-                                        <button type="button" class="btn">White</button>
-                                        <button type="button" class="btn">Black</button>
-                                        <button type="button" class="btn">Blue</button>
-                                    </div>
-                                </div>
                                 <div class="action">
                                     <a class="btn" href="#"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
-                                    <a class="btn" href="#"><i class="fa fa-shopping-bag"></i>Buy Now</a>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +48,8 @@
                                 <a class="nav-link active" data-toggle="pill" href="#description">Description</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="pill" href="#reviews">Reviews ({{$product->reviews->count()}})</a>
+                                <a class="nav-link" data-toggle="pill" href="#reviews">Reviews
+                                    ({{$product->reviews->count()}})</a>
                             </li>
                         </ul>
 
@@ -79,47 +62,48 @@
                             </div>
                             <div id="reviews" class="container tab-pane fade">
                                 @foreach($product->reviews as $review)
-                                <div class="reviews-submitted">
-                                    <div class="reviewer">{{ucwords($review->user->first_name)}} - <span>{{$review->created_at->diffForHumans()}}</span></div>
-                                    <div class="ratting">
-                                        @if(isset($review->rate))
-                                            @for($i = 0 ; $i < floor($review->rate); $i++)
-                                                <i class="fa fa-star"></i>
-                                            @endfor
-                                        @endif
+                                    <div class="reviews-submitted">
+                                        <div class="reviewer">{{ucwords($review->user->first_name)}} -
+                                            <span>{{$review->created_at->diffForHumans()}}</span></div>
+                                        <div class="ratting">
+                                            @if(isset($review->rate))
+                                                @for($i = 0 ; $i < floor($review->rate); $i++)
+                                                    <i class="fa fa-star"></i>
+                                                @endfor
+                                            @endif
+                                        </div>
+                                        <p>
+                                            {{$review->body}}
+                                        </p>
                                     </div>
-                                    <p>
-                                        {{$review->body}}
-                                    </p>
-                                </div>
                                 @endforeach
-{{--                                TODO:: Add Product Reviews Where Logged-In User Can Add Review--}}
-                                    @auth
-                                        <div class="reviews-submit">
-                                    <h4>Give your Review:</h4>
-                                    <div class="ratting">
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
-                                        <i class="far fa-star"></i>
+                                {{--                                TODO:: Add Product Reviews Where Logged-In User Can Add Review--}}
+                                @auth
+                                    <div class="reviews-submit">
+                                        <h4>Give your Review:</h4>
+                                        <div class="ratting">
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                        </div>
+                                        <div class="row form">
+                                            <div class="col-sm-6">
+                                                <input type="text" placeholder="Name">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="email" placeholder="Email">
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <textarea placeholder="Review"></textarea>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <button>Submit</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="row form">
-                                        <div class="col-sm-6">
-                                            <input type="text" placeholder="Name">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input type="email" placeholder="Email">
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <textarea placeholder="Review"></textarea>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <button>Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                    @endauth
+                                @endauth
                             </div>
                         </div>
                     </div>
@@ -127,7 +111,7 @@
             </div>
 
             <!-- Side Bar Start -->
-                <x-products-page-side-bar :categories="$categories" :products="$latestProducts" />
+            <x-products-page-side-bar :categories="$categories" :products="$latestProducts"/>
             <!-- Side Bar End -->
         </div>
     </div>
