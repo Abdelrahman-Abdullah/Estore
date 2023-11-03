@@ -55,7 +55,8 @@ Route::controller(WishlistController::class)
         Route::post('/remove', 'destroy')->name('destroy');
     });
 
-Route::post('cart/add',fn()=> request()->quantity)->name('cart.add');
+Route::get('cart',[\App\Http\Controllers\Cart::class,'index'])->name('cart.add');
+Route::post('cart/add',[\App\Http\Controllers\Cart::class,'store'])->name('cart.add');
 
 Route::controller(ContactController::class)
     ->prefix('contact')
