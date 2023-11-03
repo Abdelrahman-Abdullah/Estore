@@ -238,3 +238,16 @@
 
 })(jQuery);
 
+const quantityInput = document.querySelector('input[name="quantity"]');
+const btnMinus = document.querySelector('.btn-minus');
+const btnPlus = document.querySelector('.btn-plus');
+
+btnMinus.addEventListener('click', () => {
+    if (quantityInput.value > 1) {
+        quantityInput.value = parseInt(quantityInput.value) - 1;
+    }
+});
+
+btnPlus.addEventListener('click', () => {
+    quantityInput.value = parseInt(quantityInput.value) + 1;
+});
