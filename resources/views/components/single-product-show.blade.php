@@ -25,17 +25,23 @@
                                 </div>
 
                                 {{-- TODO: Add to cart button With Details--}}
-                                <div class="quantity">
-                                    <h4>Quantity:</h4>
-                                    <div class="qty">
-                                        <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                        <input type="text" value="1">
-                                        <button class="btn-plus"><i class="fa fa-plus"></i></button>
+                                <form action="{{route('cart.add')}}" method="post">
+                                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                                    <div class="quantity d-flex">
+                                        <h4>Quantity:</h4>
+                                        <div>
+                                            <span class="btn-minus"><i class="fa fa-minus"></i></span>
+                                            <input type="text" value="1" name="quantity" min="1">
+                                            <span class="btn-plus"><i class="fa fa-plus"></i></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="action">
-                                    <a class="btn" href="#"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
-                                </div>
+                                    @csrf
+                                    <div class="action mt-4">
+                                        <button class="btn" type="submit"><i class="fa fa-shopping-cart"></i> Add to
+                                            Cart
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -116,3 +122,4 @@
         </div>
     </div>
 </div>
+
