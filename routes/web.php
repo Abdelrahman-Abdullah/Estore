@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Cart;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\NewsletterSubscribtion;
@@ -55,8 +56,15 @@ Route::controller(WishlistController::class)
         Route::post('/remove', 'destroy')->name('destroy');
     });
 
-Route::get('cart',[\App\Http\Controllers\Cart::class,'index'])->name('cart.add');
-Route::post('cart/add',[\App\Http\Controllers\Cart::class,'store'])->name('cart.add');
+Route::controller(Cart::class)
+    ->name('cart.')
+    ->prefix('cart')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('', 'index')->name('index');
+        Route::post('/add', 'store')->name('add');
+        Route::post('/delete', 'destroy')->name('delete');
+    });
 
 Route::controller(ContactController::class)
     ->prefix('contact')

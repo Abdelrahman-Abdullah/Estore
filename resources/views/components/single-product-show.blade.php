@@ -24,8 +24,8 @@
                                     <p>${{$product->price}}</p>
                                 </div>
 
-                                {{-- TODO: Add to cart button With Details--}}
                                 <form action="{{route('cart.add')}}" method="post">
+                                    @csrf
                                     <input type="hidden" name="product_id" value="{{$product->id}}">
                                     <div class="quantity d-flex">
                                         <h4>Quantity:</h4>

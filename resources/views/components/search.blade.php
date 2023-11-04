@@ -29,9 +29,9 @@
                                 )
                             </span>
                         </a>
-                        <a href="cart.html" class="btn cart">
+                        <a href="{{route('cart.index')}}" class="btn cart">
                             <i class="fa fa-shopping-cart"></i>
-                            <span>(0)</span>
+                            <span>({{$userCartProductsCount}})</span>
                         </a>
                     </div>
                 @endauth
