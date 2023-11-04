@@ -26,7 +26,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('*', function ($view) {
-            $view->with('userWishlistProductsCount', auth()->user()?->wishlist?->products->count() ?? 0);
+            $view->with('userWishlistProductsCount', auth()->user()?->wishlist?->products->count() ?? 0)
+                 ->with('userCartProductsCount', session()->get('cart', []) ? count(session()->get('cart', [])) : 0);
         });
+
     }
 }

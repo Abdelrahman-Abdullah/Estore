@@ -3,33 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Services\CartService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Cart extends Controller
 {
+
+    public function __construct(protected CartService $cart)
+    {
+    }
+
     public function index()
     {
-        return session()->get('cart');
+        return view('cart', ['cartProducts' => session()->get('cart', [])]);
     }
+
     public function store(Request $request)
     {
-        $product = Product::find($request->product_id);
-        $cart = session()->get('cart' , []);
-        if (!isset($cart[$request->product_id])) {
-            $cart[$request->product_id] = [
-                'name' => $product->title,
-                'quantity' => $request->quantity,
-                'price' => $product->price,
-                'image' => $product->image,
-            ];
-            session()->put('cart', $cart);
+        $isAdded = $this->cart->addToCart($request);
+        if (!$isAdded) {
+            throw new NotFoundHttpException();
         }
-        else
-        {
-            $cart[$request->product_id]['quantity'] += $request->quantity;
-            session()->put('cart', $cart);
+        return back()->with('success', 'Product added to cart successfully!');
+    }
+
+    public function destroy(Request $request): RedirectResponse
+    {
+        $isDeleted = $this->cart->deleteFromCart($request);
+        if (!$isDeleted) {
+            throw new NotFoundHttpException();
         }
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        return back()->with('success', 'Product Deleted From cart successfully!');
     }
 
 }

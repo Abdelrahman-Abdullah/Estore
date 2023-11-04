@@ -1,3 +1,4 @@
+
 <x-layout>
     <div class="wishlist-page">
         <div class="container-fluid">
@@ -5,9 +6,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
-                            @if(!$userWishlistProducts->count() > 0)
-                                <div class="alert alert-success">You have {{$userWishlistProducts->count()}} products
-                                    in wishlist
+                            @if(!count($cartProducts) > 0)
+                                <div class="alert alert-success">You have 0 products
+                                    in Cart.
                                 </div>
                             @else
                                 <table class="table table-bordered">
@@ -15,31 +16,29 @@
                                     <tr>
                                         <th>Product</th>
                                         <th>Price</th>
-                                        <th>Add to Cart</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
                                         <th>Remove</th>
                                     </tr>
                                     </thead>
                                     <tbody class="align-middle">
-                                    @foreach($userWishlistProducts as $userProduct)
+                                    @foreach($cartProducts as $cartProduct)
                                         <tr>
                                             <td>
                                                 <div class="img">
-                                                    <a href="#"><img src="{{asset($userProduct->image)}}"
-                                                                     alt="Image"></a>
-                                                    <p>{{$userProduct->title}}e</p>
+                                                    <a href="#"><img src="{{asset($cartProduct['image'])}}" alt="Image"></a>
+                                                    <p>{{$cartProduct['name']}}e</p>
                                                 </div>
                                             </td>
-                                            <td>${{$userProduct->price}}</td>
+                                            <td>${{$cartProduct['price']}}</td>
+                                            <td>{{$cartProduct['quantity']}}</td>
+                                            <td>${{$cartProduct['totalPrice']}}</td>
                                             <td>
-                                                <form action="{{route('cart.add')}}" method="post">
+                                                <form action="{{route('cart.delete')}}" method="post">
                                                     @csrf
-                                                    <input type="hidden" name="product_id" value="{{$userProduct->id}}">
-                                                    <button>Add to Cart</button>
+                                                    <input type="hidden" name="product_id" value="{{$cartProduct['id']}}">
+                                                    <button class="wishlistBtn" type="submit"><i class="fa fa-trash"></i></button>
                                                 </form>
-                                            </td>
-                                            <td>
-                                                <button class="wishlistBtn" data-product-name="{{$userProduct->title}}"
-                                                        data-in-wishlist="true"><i class="fa fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
