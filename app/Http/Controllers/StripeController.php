@@ -39,11 +39,13 @@ class StripeController extends Controller
             throw new NotFoundHttpException;
         }
         $this->order->updateOrder($sessionId);
-        return view('users.profile')->with('message', 'Your payment has been successfully accepted, Check Your orders');
+        session()->flash('success', 'Your payment has been successfully accepted, Check Your orders');
+        return view('users.profile');
     }
 
     public function cancel(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
-        return view('users.profile')->with('error', 'Your payment has been canceled, Check Your orders');
+        session()->flash('error', 'Your payment has been canceled, Check Your orders');
+        return view('users.profile');
     }
 }

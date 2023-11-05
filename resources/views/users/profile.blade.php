@@ -21,9 +21,9 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                   @if(session('message'))
-                       <x-success-message />
-                   @endif
+                    @if(session('message'))
+                        <x-success-message/>
+                    @endif
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="dashboard-tab" role="tabpanel"
                              aria-labelledby="dashboard-nav">
@@ -35,6 +35,13 @@
                             <p>
                                 Here You Can Control Your Orders And Your Personal Information
                             </p>
+                            @if(session('success'))
+                                <x-success-message/>
+                            @endif
+
+                            @if(session('error'))
+                                <x-error-message/>
+                            @endif
                         </div>
                         <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
                             <div class="table-responsive">
@@ -42,44 +49,25 @@
                                     <thead class="thead-dark">
                                     <tr>
                                         <th>No</th>
-                                        <th>Product</th>
                                         <th>Date</th>
-                                        <th>Price</th>
+                                        <th>Total Price</th>
                                         <th>Status</th>
-                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Product Name</td>
-                                        <td>01 Jan 2020</td>
-                                        <td>$99</td>
-                                        <td>Approved</td>
-                                        <td>
-                                            <button class="btn">View</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Product Name</td>
-                                        <td>01 Jan 2020</td>
-                                        <td>$99</td>
-                                        <td>Approved</td>
-                                        <td>
-                                            <button class="btn">View</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Product Name</td>
-                                        <td>01 Jan 2020</td>
-                                        <td>$99</td>
-                                        <td>Approved</td>
-                                        <td>
-                                            <button class="btn">View</button>
-                                        </td>
-                                    </tr>
+                                    @forelse(auth()->user()->orders as $order)
+                                        <tr>
+                                            <td>#</td>
+                                            <td>{{$order->created_at->diffForHumans()}}</td>
+                                            <td>${{$order->total_price}}</td>
+                                            <td class="{{$order->status == 'paid' ? 'text-success' : 'text-danger'}}">{{ucwords($order->status)}}</td>
+
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center">No Orders Yet</td>
+                                        </tr>
+                                    @endforelse
                                     </tbody>
                                 </table>
                             </div>
@@ -87,11 +75,7 @@
                         <div class="tab-pane fade" id="payment-tab" role="tabpanel" aria-labelledby="payment-nav">
                             <h4>Payment Method</h4>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. In condimentum quam ac mi
-                                viverra dictum. In efficitur ipsum diam, at dignissim lorem tempor in. Vivamus tempor
-                                hendrerit finibus. Nulla tristique viverra nisl, sit amet bibendum ante suscipit non.
-                                Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam eros. Aliquam et sapien
-                                eget arcu rhoncus scelerisque.
+                                All Payment Method Done With <a href="https://stripe.com/" target="_blank">Stripe</a>
                             </p>
                         </div>
                         <div class="tab-pane fade" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
