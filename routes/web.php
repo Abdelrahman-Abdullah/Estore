@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\NewsletterSubscribtion;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserRegisterController;
 use App\Http\Controllers\WishlistController;
@@ -64,6 +65,16 @@ Route::controller(Cart::class)
         Route::get('', 'index')->name('index');
         Route::post('/add', 'store')->name('add');
         Route::post('/delete', 'destroy')->name('delete');
+    });
+
+Route::controller(StripeController::class)
+    ->prefix('checkout')
+    ->name('checkout.')
+    ->middleware('auth')
+    ->group(function () {
+        Route::post('', 'checkout')->name('create');
+        Route::post('/success', 'success')->name('success');
+        Route::post('/cancel', 'cancel')->name('cancel');
     });
 
 Route::controller(ContactController::class)
