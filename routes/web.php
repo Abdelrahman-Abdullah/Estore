@@ -73,8 +73,8 @@ Route::controller(StripeController::class)
     ->middleware('auth')
     ->group(function () {
         Route::post('', 'checkout')->name('create');
-        Route::post('/success', 'success')->name('success');
-        Route::post('/cancel', 'cancel')->name('cancel');
+        Route::get('/success', 'success')->name('success');
+        Route::get('/cancel', 'cancel')->name('cancel');
     });
 
 Route::controller(ContactController::class)
