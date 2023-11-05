@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->decimal('total_price', 8, 2);
+            $table->string('session_id');
+            $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
             $table->timestamps();
         });
     }
