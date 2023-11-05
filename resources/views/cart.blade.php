@@ -1,4 +1,3 @@
-
 <x-layout>
     <div class="wishlist-page">
         <div class="container-fluid">
@@ -36,8 +35,10 @@
                                             <td>
                                                 <form action="{{route('cart.delete')}}" method="post">
                                                     @csrf
-                                                    <input type="hidden" name="product_id" value="{{$cartProduct['id']}}">
-                                                    <button class="wishlistBtn" type="submit"><i class="fa fa-trash"></i></button>
+                                                    <input type="hidden" name="product_id"
+                                                           value="{{$cartProduct['id']}}">
+                                                    <button class="wishlistBtn" type="submit"><i
+                                                            class="fa fa-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -45,6 +46,13 @@
                                     </tbody>
                                 </table>
                             @endif
+                            <div class="w-100 text-center">
+                                <form action="{{route('checkout.create')}}" method="post">
+                                    @csrf
+                                <button class="btn mt-4 px-5" type="submit"><a
+                                        href="{{route('checkout.create')}}">Checkout</a>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
