@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use Illuminate\Http\RedirectResponse;
+use Stripe\Checkout\Session;
+use Stripe\Stripe;
 
 class StripeService
 {
@@ -40,5 +42,15 @@ class StripeService
             'products' => $products,
             'totalPrice' => $totalPrice,
         ];
+    }
+
+    public function checkIfTheSessionIsCorrect($sessionId): bool
+    {
+        Stripe::setApiKey(config('stripe.secret_key'));
+        $isThereSession = \Stripe\Checkout\Session::retrieve($sessionId);
+        if (!$isThereSession) {
+            return false;
+        }
+        return true;
     }
 }

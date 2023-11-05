@@ -49,8 +49,8 @@
                             <div class="w-100 text-center">
                                 <form action="{{route('checkout.create')}}" method="post">
                                     @csrf
-                                <button class="btn mt-4 px-5" type="submit"><a
-                                        href="{{route('checkout.create')}}">Checkout</a>
+                                <button class="btn mt-4 px-5" type="submit">
+                                       Checkout
                                 </button>
                             </div>
                         </div>
