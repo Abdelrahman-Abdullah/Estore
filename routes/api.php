@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\UserRegisterController as APIUserRegisterController;
+use App\Http\Controllers\API\UserAuthController as APIUserAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +19,7 @@ Route::prefix('user')
     ->name('user.')
     ->group(function () {
         Route::post('register', APIUserRegisterController::class)->name('register');
+        Route::post('login', [APIUserAuthController::class, 'login'])->name('login');
+        Route::post('logout', [APIUserAuthController::class, 'logout'])->name('logout');
     });
 
