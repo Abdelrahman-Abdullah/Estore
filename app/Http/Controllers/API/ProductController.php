@@ -18,7 +18,7 @@ class ProductController extends Controller
         return response()->json([
             'message' => 'success',
             'statusCode' => 200,
-            'products' => ProductResource::collection($this->product->getAll())
+            'products' => ProductResource::collection($this->product->all()->get())
         ]);
     }
 

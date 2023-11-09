@@ -8,14 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class ProductService
 {
-    public function getAll()
+    public function all()
     {
         return Product::withAvg('reviews', 'rate')
             ->when(request('search'), fn($query) => $query->whereNameLike(request('search')))
             ->when(request()->query('sort'), fn($query) => $this->applySort($query))
-            ->when(request()->has('min_price', 'max_price'), fn($query) => $this->applyPriceRange($query))
-            ->paginate(9)
-            ->withQueryString();
+            ->when(request()->has('min_price', 'max_price'), fn($query) => $this->applyPriceRange($query));
     }
 
     private function applySort($query)
@@ -44,7 +42,7 @@ class ProductService
     {
         return Product::with('reviews')
             ->withAvg('reviews', 'rate')
-            ->where('title', $title)
+            ->where('title', 'like', "%{$title}%")
             ->first();
     }
 
