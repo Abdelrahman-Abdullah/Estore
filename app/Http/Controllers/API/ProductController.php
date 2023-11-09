@@ -21,4 +21,14 @@ class ProductController extends Controller
             'products' => ProductResource::collection($this->product->getAll())
         ]);
     }
+
+    public function show($title): \Illuminate\Http\JsonResponse|string
+    {
+        $product = $this->product->getOne($title);
+        return response()->json([
+            'message' => 'success',
+            'statusCode' => 200,
+            'product' => new ProductResource($product)
+        ]);
+    }
 }

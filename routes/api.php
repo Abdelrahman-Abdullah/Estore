@@ -28,5 +28,6 @@ Route::prefix('products')
     ->name('products.')
     ->group(function () {
         Route::get('', [ProductController::class, 'index'])->name('index');
+        Route::get('{title}', [ProductController::class, 'show'])->name('show');
     });
 
