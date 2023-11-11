@@ -22,7 +22,7 @@ Route::prefix('user')
     ->name('user.')
     ->group(function () {
         Route::post('register', UserRegisterController::class)->name('register');
-        Route::post('login', [UserRegisterController::class, 'login'])->name('login');
+        Route::post('login', [UserAuthController::class, 'login'])->name('login');
         Route::post('logout', [UserAuthController::class, 'logout'])->name('logout');
     });
 
