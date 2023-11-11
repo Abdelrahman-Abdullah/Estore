@@ -36,7 +36,7 @@ Route::prefix('products')
 Route::controller(WishlistController::class)
     ->prefix('wishlist')
     ->as('wishlist.')
-    ->middleware('auth')
+    ->middleware('auth:sanctum')
     ->group(function () {
         Route::get('', 'index')->name('index');
         Route::post('/add', 'store')->name('store');

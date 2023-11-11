@@ -21,7 +21,7 @@ class WishlistController extends Controller
 
     public function store()
     {
-        $product = Product::where('title', request()->input('product_name'))->firstOrFail('id');
+        $product = Product::where('title', 'like', '%'.request()->input('product_name').'%')->firstOrFail('id');
         $isAdded =  $this->wishlist->addToWishlist($product);
         $isAdded ? $message = 'Product added to wishlist' : $message = 'Product already in wishlist';
         return response()->json([
@@ -31,7 +31,7 @@ class WishlistController extends Controller
     }
     public function destroy()
     {
-        $product = Product::where('title', request()->input('product_name'))->firstOrFail('id');
+        $product = Product::where('title', 'like', '%'.request()->input('product_name').'%')->firstOrFail('id');
         $isRemoved =  $this->wishlist->removeFromWishlist($product);
         $isRemoved ? $message = 'Product removed from wishlist' : $message = 'Product not in wishlist';
         return response()->json([
