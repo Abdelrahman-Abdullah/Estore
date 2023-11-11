@@ -4,6 +4,7 @@ use App\Http\Controllers\API\ContactController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\UserRegisterController;
 use App\Http\Controllers\API\UserAuthController;
+use App\Http\Controllers\API\WishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,16 @@ Route::prefix('products')
     ->group(function () {
         Route::get('', [ProductController::class, 'index'])->name('index');
         Route::get('{title}', [ProductController::class, 'show'])->name('show');
+    });
+
+Route::controller(WishlistController::class)
+    ->prefix('wishlist')
+    ->as('wishlist.')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('', 'index')->name('index');
+        Route::post('/add', 'store')->name('store');
+        Route::post('/remove', 'destroy')->name('destroy');
     });
 
 Route::post('contact', [ContactController::class, 'store'])->name('contact.store');
