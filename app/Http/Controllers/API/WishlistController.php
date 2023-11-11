@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\WishlistResource;
 use App\Models\Product;
 use App\Services\WishlistService;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class WishlistController extends Controller
         return response()->json([
             'message' => 'success',
             'statusCode' => 200,
-            'userWishlistProducts' => $this->wishlist->allProductsWithin()
+            'userWishlistProducts' => WishlistResource::collection($this->wishlist->allProductsWithin())
         ]);
     }
 
