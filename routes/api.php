@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ContactController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\UserRegisterController;
 use App\Http\Controllers\API\UserAuthController;
@@ -31,3 +32,4 @@ Route::prefix('products')
         Route::get('{title}', [ProductController::class, 'show'])->name('show');
     });
 
+Route::post('contact', [ContactController::class, 'store'])->name('contact.store');
