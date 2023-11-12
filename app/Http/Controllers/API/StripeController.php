@@ -33,7 +33,10 @@ class StripeController extends Controller
 
     public function success()
     {
-
+        return response()->json([
+            'statusCode' => 200,
+            'message' => 'Your payment has been successfully accepted, Check Your orders'
+        ]);
     }
 
     public function cancel()
