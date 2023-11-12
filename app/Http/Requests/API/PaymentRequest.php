@@ -23,6 +23,9 @@ class PaymentRequest extends FormRequest
     {
         return [
             'cart' => 'required|array',
+            'cart.*.name' => 'required|string',
+            'cart.*.quantity' => 'required|integer|min:1',
+            'cart.*.price' => 'required|numeric|min:0',
         ];
     }
 }
