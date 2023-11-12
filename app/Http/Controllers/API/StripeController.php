@@ -41,6 +41,9 @@ class StripeController extends Controller
 
     public function cancel()
     {
-
+        return response()->json([
+            'statusCode' => 402,
+            'message' => 'Your payment has been canceled, Check Your orders'
+        ]);
     }
 }
