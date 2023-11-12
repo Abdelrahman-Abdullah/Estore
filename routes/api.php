@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\ContactController;
 use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\StripeController;
 use App\Http\Controllers\API\UserRegisterController;
 use App\Http\Controllers\API\UserAuthController;
 use App\Http\Controllers\API\WishlistController;
@@ -41,6 +42,16 @@ Route::controller(WishlistController::class)
         Route::get('', 'index')->name('index');
         Route::post('/add', 'store')->name('store');
         Route::post('/remove', 'destroy')->name('destroy');
+    });
+
+Route::controller(StripeController::class)
+    ->prefix('checkout')
+    ->name('checkout.')
+    ->middleware('auth:sanctum')
+    ->group(function () {
+        Route::post('', 'checkout')->name('create');
+        Route::get('/success', 'success')->name('success');
+        Route::get('/cancel', 'cancel')->name('cancel');
     });
 
 Route::post('contact', [ContactController::class, 'store'])->name('contact.store');
