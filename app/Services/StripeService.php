@@ -4,6 +4,9 @@ namespace App\Services;
 
 use Illuminate\Http\RedirectResponse;
 use Stripe\Checkout\Session;
+use Stripe\Customer;
+use Stripe\EphemeralKey;
+use Stripe\PaymentIntent;
 use Stripe\Stripe;
 
 class StripeService
@@ -47,10 +50,44 @@ class StripeService
     public function checkIfTheSessionIsCorrect($sessionId): bool
     {
         Stripe::setApiKey(config('stripe.secret_key'));
-        $isThereSession = \Stripe\Checkout\Session::retrieve($sessionId);
+        $isThereSession = Session::retrieve($sessionId);
         if (!$isThereSession) {
             return false;
         }
         return true;
+    }
+
+    public function isThereCustomerOrCreate()
+    {
+        $currentUserEmail = auth()->user()->email;
+        $existingCustomer = Customer::all([
+            'email' => $currentUserEmail,
+            'limit' => 1,
+        ]);
+        if (count($existingCustomer->data) > 0) {
+            return $existingCustomer->data[0]->id;
+        }
+        $newCustomer = Customer::create([
+            'email' => $currentUserEmail,
+        ]);
+        return $newCustomer->data->id;
+    }
+
+    public function createEphemeralKey($customerId): EphemeralKey
+    {
+        return EphemeralKey::create(
+            ['customer' => $customerId],
+            ['stripe_version' => '2020-08-27']
+        );
+    }
+
+    public function createPaymentIntent($amount, $customerId): PaymentIntent
+    {
+        $paymentIntent = PaymentIntent::create([
+            'amount' => 100 * $amount,
+            'currency' => 'usd',
+            'customer' => $customerId,
+        ]);
+        return $paymentIntent;
     }
 }

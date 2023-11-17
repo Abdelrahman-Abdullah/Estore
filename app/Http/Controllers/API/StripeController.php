@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\PaymentRequest;
 use App\Services\OrderService;
 use App\Services\StripeService;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
@@ -13,37 +15,47 @@ use Stripe\Checkout\Session;
 
 class StripeController extends Controller
 {
-    public function __construct(protected StripeService $stripe, protected OrderService $order)
+    public function __construct(protected StripeService $stripe)
     {
-    }
-    public function checkout(PaymentRequest $request)
-    {
-        $cart = $request->cart;
-        Stripe::setApiKey(config('stripe.secret_key'));
-        $totalPrice = $this->stripe->fillTheProductsArray($cart)['totalPrice'];
-        $session = Session::create([
-            'line_items' => $this->stripe->fillTheProductsArray($cart)['products'],
-            'mode' => 'payment',
-            'success_url' => route('checkout.success'),
-            'cancel_url' => route('checkout.cancel'),
-        ]);
-        $this->order->storeOrder($totalPrice, $session->id);
-        redirect($session->url);
+
     }
 
-    public function success()
+    public function getClientSecretKey(PaymentRequest $request): JsonResponse
     {
-        return response()->json([
-            'statusCode' => 200,
-            'message' => 'Your payment has been successfully accepted, Check Your orders'
-        ]);
+        try {
+            // Set your secret key. Remember to switch to your live secret key in production!
+            Stripe::setApiKey(config('stripe.secret_key'));
+            // Check If There Is A Customer Or Create One
+            $customerId = $this->stripe->isThereCustomerOrCreate();
+            // Create Ephemeral Key
+            $ephemeralKey = $this->stripe->createEphemeralKey($customerId);
+            // Create Payment Intent
+            $paymentIntent = $this->stripe->createPaymentIntent($request->amount, $customerId);
+            // Response With The Keys
+            return response()->json(
+                [
+                    'client_secret_key' => $paymentIntent->client_secret,
+                    'paymentIntentId' => $paymentIntent->id,
+                    'ephemeralKey' => $ephemeralKey->secret,
+                    'customer' => $customerId,
+                    'success' => true,
+                ], 200
+            );
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+
     }
 
-    public function cancel()
+    public function checkPaymentStatus(Request $request): JsonResponse
     {
-        return response()->json([
-            'statusCode' => 402,
-            'message' => 'Your payment has been canceled, Check Your orders'
-        ]);
+        $request->validate(['paymentIntentId' => 'required']);
+        try {
+            Stripe::setApiKey(config('stripe.secret_key'));
+            $paymentIntent = \Stripe\PaymentIntent::retrieve($request->paymentIntentId);
+            return response()->json(['status' => $paymentIntent->status], 200);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 }
