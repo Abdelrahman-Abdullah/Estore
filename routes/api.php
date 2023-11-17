@@ -45,13 +45,12 @@ Route::controller(WishlistController::class)
     });
 
 Route::controller(StripeController::class)
-    ->prefix('checkout')
-    ->name('checkout.')
+    ->prefix('payment')
+    ->name('payment.')
     ->middleware('auth:sanctum')
     ->group(function () {
-        Route::post('', 'checkout')->name('create');
-        Route::get('/success', 'success')->name('success');
-        Route::get('/cancel', 'cancel')->name('cancel');
+        Route::post('intent', 'getClientSecretKey')->name('intent');
+        Route::post('status', 'checkPaymentStatus')->name('status');
     });
 
 Route::post('contact', [ContactController::class, 'store'])->name('contact.store');

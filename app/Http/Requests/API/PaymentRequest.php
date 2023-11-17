@@ -22,10 +22,7 @@ class PaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cart' => 'required|array',
-            'cart.*.name' => 'required|string',
-            'cart.*.quantity' => 'required|integer|min:1',
-            'cart.*.price' => 'required|numeric|min:0',
+            'amount' => 'required|numeric|min:1',
         ];
     }
 }
