@@ -34,6 +34,7 @@ class StripeController extends Controller
             // Response With The Keys
             return response()->json(
                 [
+                    'public_key' => config('stripe.public_key'),
                     'client_secret_key' => $paymentIntent->client_secret,
                     'paymentIntentId' => $paymentIntent->id,
                     'ephemeralKey' => $ephemeralKey->secret,
